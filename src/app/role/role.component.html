@@ -1,0 +1,69 @@
+<app-user-bar></app-user-bar>
+
+<div class="role-description">
+  <h4>Role - Web Developer</h4>
+</div>
+
+<div class="application-filter">
+  <h5>Application Filter</h5>
+  
+  <label for="">Occupation</label>
+  <select (change)="changeFilter()" [(ngModel)]="occupation" >
+    <option>Web Developer</option>
+    <option>Doctor</option>
+    <option>Nurse</option>
+    <option>Construction</option>
+    <option>Biologist</option>
+    <option>Gym Instructor</option>
+  </select>
+
+  <label for="">Years Of Experience</label>
+  <select (change)="changeFilter()" [(ngModel)]="experience">
+    <option>0</option>
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option value=4 >4+</option>
+  </select>
+
+  <label for="">Convictions</label>
+  <select (change)="changeFilter()" [(ngModel)]="convictions">
+    <option>None</option>
+    <option>Felony</option>
+    <option>Misdemeanor</option>
+  </select>
+</div>
+
+<div class="considerable-applications">
+  <h5>Considerable Applications</h5>
+  <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search for...">
+      <span class="input-group-btn">
+        <button class="btn btn-success" type="button">Go!</button>
+      </span>
+    </div>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Occupation</th>
+        <th>Years Of Experience</th>
+        <th>Convictions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let application of applications">
+        <button class="btn btn-info btn-sm" (click)="setActiveApplication()" >Show Application</button>
+        <td>{{application.name}}</td>
+        <td *ngFor="let question of application.questions">{{question.answer}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="applicant">
+  Bob 20
+</div>
+
+<button class="btn btn-primary" routerLink="/manager">Back to All Roles</button>

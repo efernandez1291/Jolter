@@ -1,0 +1,28 @@
+.role-description {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.application-filter {
+    margin-top: 40px;
+
+    select {
+        margin-right: 10px;
+    }
+}
+
+.considerable-applications {
+    margin-top: 40px;
+
+    tr button {
+        margin-top: 10px;
+    }
+
+    th {
+        border-top: none;
+    }
+
+    td {
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,22 @@
+.user-info {
+    float: right;
+
+    .user-name {
+        text-align: right;
+        display: inline;
+        vertical-align: middle;
+        margin-right:2px;
+    }
+
+    .user-image {
+        width: 44px;
+        vertical-align: bottom;
+        background-color: white;
+        border-radius: 44px;
+        vertical-align: middle;
+    }
+
+    button {
+        margin-left: 20px;
+    }
+}

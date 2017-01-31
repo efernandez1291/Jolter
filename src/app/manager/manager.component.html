@@ -1,0 +1,21 @@
+<app-user-bar></app-user-bar>
+
+<div class="list-group">
+  <h5 class="mb-1"> Active Roles</h5>
+  <button class="btn btn-success btn-sm">+ Create Role</button>
+  <button href="#" class="list-group-item list-group-item-action list-group-item-info" (click)="openRole(200)"> 
+    Web Developer - Role ID #200 ( Open ) - 4 Applications Submitted
+  </button>
+</div>
+
+<div class="list-group">
+  <h5 class="mb-1">Filled Roles</h5>
+  <button class="list-group-item list-group-item-action list-group-item-success">Web Developer - Role ID #201 ( Filled ) - 28 Applications Submitted</button>
+  <button class="list-group-item list-group-item-action list-group-item-success">Web Developer - Role ID #202 ( Filled ) - 18 Applications Submitted</button>
+  <button class="list-group-item list-group-item-action list-group-item-danger">Web Developer - Role ID #203 ( Canceled ) - 0 Applications Submitted</button>
+  <button class="list-group-item list-group-item-action list-group-item-success">Web Developer - Role ID #204 ( Filled ) - 213 Applications Submitted</button>
+  <button class="list-group-item list-group-item-action list-group-item-success">Web Developer - Role ID #205 ( Filled ) - 42 Applications Submitted</button>
+  <button class="list-group-item list-group-item-action list-group-item-success">Web Developer - Role ID #201 ( Filled ) - 14 Applications Submitted</button>
+</div>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,1 @@
+// Used to run functions before angular loads the app module.
