@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="332px" height="297px" viewBox="0 0 332 297" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>Jolter</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <radialGradient cx="100%" cy="0%" fx="100%" fy="0%" r="141.421356%" id="radialGradient-1">
+            <stop stop-color="#00FFE7" offset="0%"></stop>
+            <stop stop-color="#3199DC" offset="46.7574139%"></stop>
+            <stop stop-color="#4DD05E" offset="100%"></stop>
+        </radialGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FBDA61" offset="0%"></stop>
+            <stop stop-color="#F76B1C" offset="100%"></stop>
+        </linearGradient>
+        <path d="M165.421959,66.7955795 L230.208281,0.98828125 L331.601562,0.98828125 L215.21875,103.632812 L331.601562,103.632812 L208.213541,174.083858 L257.410156,220.714844 L215.71875,224.210938 L286.460938,296.722656 L165.78951,233.994125 L45.140625,296.710937 L115.882812,224.199219 L74.1914062,220.703125 L123.37259,174.086766 L0,103.644531 L116.382812,103.644531 L0,1 L99.7459979,1 L165.421959,66.7955795 Z M165.924696,123.816896 L155.691406,124.300781 L165.794599,133.877088 L175.910156,124.289062 L165.924696,123.816896 Z M165.941873,205.187253 L177.035156,204.726563 L165.790519,198.306195 L154.566406,204.714844 L165.941873,205.187253 Z" id="path-3"></path>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="331.601562" height="295.734375" fill="white">
+            <use xlink:href="#path-3"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Jolter" stroke="url(#linearGradient-2)" stroke-width="12" fill="url(#radialGradient-1)">
+            <use id="Combined-Shape" mask="url(#mask-4)" xlink:href="#path-3"></use>
+        </g>
+    </g>
+</svg>
