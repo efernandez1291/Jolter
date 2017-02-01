@@ -6742,16 +6742,29 @@ html {
   background: -webkit-linear-gradient(224deg, #3023AE 0%, #C96DD8 100%);
   background: linear-gradient(-134deg, #3023AE 0%, #C96DD8 100%);
   background-repeat: no-repeat;
-  height: 100%;
+  background-size: cover;
+  min-height: 100%;
   width: 100%;
-  font-family: Verdana, Geneva, sans-serif; }
+  font-family: Verdana, Geneva, sans-serif;
+  padding-top: 40px; }
 
 body {
+  background: -webkit-linear-gradient(224deg, #3023AE 0%, #C96DD8 100%);
+  background: linear-gradient(-134deg, #3023AE 0%, #C96DD8 100%);
   background: none;
   color: white;
-  padding: 10px; }
+  padding: 10px;
+  min-height: 100%;
+  width: 100%; }
 
 button {
   cursor: pointer; }
+
+input {
+  background-clip: border-box !important; }
+
+select {
+  height: 38px;
+  color: #464a4c; }
 
 /*# sourceMappingURL=styles.bundle.map*/

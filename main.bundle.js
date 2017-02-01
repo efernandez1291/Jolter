@@ -209,7 +209,10 @@ var RoleComponent = (function () {
     function RoleComponent(applicationsService, activatedRoute) {
         this.applicationsService = applicationsService;
         this.activatedRoute = activatedRoute;
+        // Used to save applications for filtering later.
         this.removedApplications = [];
+        this.activeApplication = {};
+        this.showApplication = false;
     }
     RoleComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -228,7 +231,7 @@ var RoleComponent = (function () {
         // Sets default application filters
         this.occupation = 'Web Developer';
         this.experience = 3;
-        this.convictions = "None";
+        this.roleRequirements = ['id1', 'id2'];
     };
     // TODO this should be a pipe, but i'm running out of time.
     RoleComponent.prototype.filterApplications = function () {
@@ -241,12 +244,12 @@ var RoleComponent = (function () {
                 var questionId = this.applications[application].questions[question].id;
                 // Ternary that determines if an Application needs to be removed from the array
                 var removeApp = (answer === this.occupation ||
-                    answer >= Number(this.experience) ||
-                    answer === this.convictions) ?
-                    false : true;
-                if (removeApp) {
-                    // Used the removed application's index to save the one you need.
+                    answer >= Number(this.experience)) ? false : true;
+                // If removeApp return true and the questionId is needed, remove the application from our array
+                if (removeApp && this.roleRequirements.indexOf(questionId) > -1) {
+                    // Cache the to-be removed applications for use when filtering
                     this.removedApplications.push(this.applications[Number(application)]);
+                    // Remove application that didn't meet the filter standards
                     this.removeApplication(Number(application));
                     return;
                 }
@@ -259,15 +262,16 @@ var RoleComponent = (function () {
         this.applications.splice(applicationIndex, 1);
         this.filterApplications();
     };
-    RoleComponent.prototype.saveRemovedApps = function (applicationToBeSavedIndex) {
-        this.removedApplications.push(this.applications[applicationToBeSavedIndex]);
-    };
     RoleComponent.prototype.changeFilter = function () {
         for (var removedApplication in this.removedApplications) {
             this.applications.push(this.removedApplications[removedApplication]);
         }
         this.removedApplications = [];
         this.filterApplications();
+    };
+    RoleComponent.prototype.setActiveApplication = function (application) {
+        this.activeApplication = application;
+        this.showApplication = true;
     };
     RoleComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* Component */])({
@@ -324,8 +328,8 @@ var ApplicationsService = (function () {
                     },
                     {
                         id: 'id3',
-                        question: 'Convictions',
-                        answer: 'None'
+                        question: 'Top Skill',
+                        answer: 'Angular'
                     }
                 ]
             },
@@ -346,8 +350,8 @@ var ApplicationsService = (function () {
                     },
                     {
                         id: 'id3',
-                        question: 'Convictions',
-                        answer: 'None'
+                        question: 'Top Skill',
+                        answer: 'C++'
                     }
                 ]
             },
@@ -368,8 +372,30 @@ var ApplicationsService = (function () {
                     },
                     {
                         id: 'id3',
-                        question: 'Convictions',
-                        answer: 'None'
+                        question: 'Top Skill',
+                        answer: 'Java'
+                    }
+                ]
+            },
+            {
+                name: 'Ken Block',
+                applicationId: 200,
+                manager: 'Manager001',
+                questions: [
+                    {
+                        id: 'id1',
+                        question: 'Current Occupation',
+                        answer: 'Web Developer'
+                    },
+                    {
+                        id: 'id2',
+                        question: 'Years of Experience',
+                        answer: 3
+                    },
+                    {
+                        id: 'id3',
+                        question: 'Top Skill',
+                        answer: 'Drifting'
                     }
                 ]
             },
@@ -390,8 +416,8 @@ var ApplicationsService = (function () {
                     },
                     {
                         id: 'id3',
-                        question: 'Convictions',
-                        answer: 'None'
+                        question: 'Top Skill',
+                        answer: 'Rollerblading'
                     }
                 ]
             },
@@ -412,8 +438,8 @@ var ApplicationsService = (function () {
                     },
                     {
                         id: 'id3',
-                        question: 'Convictions',
-                        answer: 'None'
+                        question: 'Tope Skill',
+                        answer: 'Im a brain Surgoen'
                     }
                 ]
             },
@@ -434,8 +460,8 @@ var ApplicationsService = (function () {
                     },
                     {
                         id: 'id3',
-                        question: 'Convictions',
-                        answer: 'Felony'
+                        question: 'Top Skill',
+                        answer: 'Definitely Pushups'
                     }
                 ]
             },
@@ -447,7 +473,7 @@ var ApplicationsService = (function () {
                     {
                         id: 'id1',
                         question: 'Current Occupation',
-                        answer: 'Doctor'
+                        answer: 'Biologist'
                     },
                     {
                         id: 'id2',
@@ -456,8 +482,8 @@ var ApplicationsService = (function () {
                     },
                     {
                         id: 'id3',
-                        question: 'Convictions',
-                        answer: 'Misdemeanor'
+                        question: 'Top Skill',
+                        answer: 'Pokemon Go'
                     }
                 ]
             }
@@ -766,10 +792,10 @@ var UserBarComponent = (function () {
     // TODO get this from a service that stores a user model
     UserBarComponent.prototype.getUserName = function () {
         if (this.location.path() === '/manager' || this.location.path() === '/manager/role/200') {
-            this.userName = 'Manager001';
+            this.userName = 'Big Boss';
         }
         else {
-            this.userName = 'User001';
+            this.userName = 'Eduardo Fernandez';
         }
     };
     UserBarComponent = __decorate([
@@ -883,7 +909,7 @@ module.exports = ".slogan {\n  text-align: center;\n  font-size: 30px;\n  font-w
 /***/ 822:
 /***/ (function(module, exports) {
 
-module.exports = ".list-group {\n  margin-top: 50px; }\n"
+module.exports = ".list-group {\n  margin-top: 50px; }\n\n.active-role-table {\n  background-color: rgba(0, 0, 0, 0.2);\n  padding: 20px; }\n  .active-role-table button {\n    width: 100%; }\n\n.filled-role-table {\n  background-color: rgba(0, 0, 0, 0.2);\n  padding: 20px; }\n"
 
 /***/ }),
 
@@ -897,21 +923,21 @@ module.exports = ".no-page-found {\n  text-align: center;\n  padding-top: 15%; }
 /***/ 824:
 /***/ (function(module, exports) {
 
-module.exports = ".role-description {\n  margin-top: 40px;\n  text-align: center; }\n\n.application-filter {\n  margin-top: 40px; }\n  .application-filter select {\n    margin-right: 10px; }\n\n.considerable-applications {\n  margin-top: 40px; }\n  .considerable-applications tr button {\n    margin-top: 10px; }\n  .considerable-applications th {\n    border-top: none; }\n  .considerable-applications td {\n    cursor: pointer; }\n"
+module.exports = ".role-description {\n  margin-top: 40px;\n  text-align: center; }\n\n.application-filter {\n  margin-top: 40px; }\n  .application-filter select {\n    margin: 0 10px 0 5px; }\n  .application-filter .add-filter {\n    display: inline-block;\n    margin-right: 10px; }\n\n.considerable-applications {\n  margin-top: 40px; }\n  .considerable-applications .applications-table {\n    background-color: rgba(0, 0, 0, 0.2);\n    padding: 20px; }\n  .considerable-applications tr button {\n    margin-top: 10px; }\n  .considerable-applications th {\n    border-top: none; }\n  .considerable-applications td {\n    cursor: pointer; }\n  .considerable-applications nav {\n    margin: 0 auto;\n    display: table;\n    cursor: pointer; }\n\n.applicant {\n  margin-top: 20px;\n  overflow-y: hidden;\n  max-height: 0;\n  /* approximate max height */\n  -webkit-transition-property: all;\n  transition-property: all;\n  -webkit-transition-duration: 2s;\n          transition-duration: 2s;\n  -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);\n          transition-timing-function: cubic-bezier(0, 1, 0.5, 1); }\n  .applicant.open {\n    max-height: 500px; }\n  .applicant .applicant-form {\n    background-color: rgba(0, 0, 0, 0.2);\n    padding: 20px; }\n    .applicant .applicant-form .hire {\n      margin: 30px auto 0;\n      display: block; }\n\n.back-to-roles {\n  margin-top: 40px; }\n"
 
 /***/ }),
 
 /***/ 825:
 /***/ (function(module, exports) {
 
-module.exports = ".emblem {\n  width: 34px;\n  display: inline-block;\n  vertical-align: middle;\n  cursor: pointer; }\n\n.emblem-text {\n  display: inline-block;\n  vertical-align: middle;\n  margin: 0;\n  cursor: pointer; }\n"
+module.exports = ".emblem {\n  background-color: rgba(0, 0, 0, 0.3);\n  width: 100%;\n  text-align: center;\n  position: absolute;\n  top: 0;\n  height: 50px;\n  left: 0;\n  padding-top: 4px; }\n  .emblem .emblem-img {\n    width: 44px;\n    display: inline-block;\n    vertical-align: middle;\n    margin-left: 5px;\n    cursor: pointer; }\n  .emblem .emblem-text {\n    display: inline-block;\n    vertical-align: middle;\n    margin: 0;\n    font-weight: 200;\n    cursor: pointer; }\n"
 
 /***/ }),
 
 /***/ 826:
 /***/ (function(module, exports) {
 
-module.exports = ".user-info {\n  float: right; }\n  .user-info .user-name {\n    text-align: right;\n    display: inline;\n    vertical-align: middle;\n    margin-right: 2px; }\n  .user-info .user-image {\n    width: 44px;\n    vertical-align: bottom;\n    background-color: white;\n    border-radius: 44px;\n    vertical-align: middle; }\n  .user-info button {\n    margin-left: 20px; }\n"
+module.exports = ".user-info {\n  position: absolute;\n  top: 5px; }\n  .user-info .user-name {\n    text-align: right;\n    display: inline;\n    vertical-align: middle;\n    margin-right: 2px; }\n  .user-info .user-image {\n    width: 40px;\n    height: 40px;\n    vertical-align: bottom;\n    background-color: white;\n    border-radius: 40px;\n    vertical-align: middle; }\n\n.log-out {\n  position: absolute;\n  top: 12px;\n  right: 15px; }\n"
 
 /***/ }),
 
@@ -939,7 +965,7 @@ module.exports = "<app-emblem></app-emblem>\n\n<p class=\"slogan\">Job Hunting a
 /***/ 830:
 /***/ (function(module, exports) {
 
-module.exports = "<app-user-bar></app-user-bar>\n\n<div class=\"list-group\">\n  <h5 class=\"mb-1\"> Active Roles</h5>\n  <button class=\"btn btn-success btn-sm\">+ Create Role</button>\n  <button href=\"#\" class=\"list-group-item list-group-item-action list-group-item-info\" (click)=\"openRole(200)\"> \n    Web Developer - Role ID #200 ( Open ) - 4 Applications Submitted\n  </button>\n</div>\n\n<div class=\"list-group\">\n  <h5 class=\"mb-1\">Filled Roles</h5>\n  <button class=\"list-group-item list-group-item-action list-group-item-success\">Web Developer - Role ID #201 ( Filled ) - 28 Applications Submitted</button>\n  <button class=\"list-group-item list-group-item-action list-group-item-success\">Web Developer - Role ID #202 ( Filled ) - 18 Applications Submitted</button>\n  <button class=\"list-group-item list-group-item-action list-group-item-danger\">Web Developer - Role ID #203 ( Canceled ) - 0 Applications Submitted</button>\n  <button class=\"list-group-item list-group-item-action list-group-item-success\">Web Developer - Role ID #204 ( Filled ) - 213 Applications Submitted</button>\n  <button class=\"list-group-item list-group-item-action list-group-item-success\">Web Developer - Role ID #205 ( Filled ) - 42 Applications Submitted</button>\n  <button class=\"list-group-item list-group-item-action list-group-item-success\">Web Developer - Role ID #201 ( Filled ) - 14 Applications Submitted</button>\n</div>\n\n<router-outlet></router-outlet>"
+module.exports = "<app-user-bar></app-user-bar>\n\n<div class=\"list-group\">\n  <h5 class=\"mb-1\"> Active Roles</h5>\n  <div class=\"active-role-table\">\n    <button class=\"btn btn-primary\">Create a New Role +</button>\n    <button href=\"#\" class=\"list-group-item list-group-item-action list-group-item-info\" (click)=\"openRole(200)\"> \n      Web Developer - Role ID #200 ( Open ) - 7 Applications Submitted\n    </button>\n  </div>\n</div>\n\n<div class=\"list-group\">\n  <h5 class=\"mb-1\">Filled Roles</h5>\n  <div class=\"filled-role-table\"> \n    <button class=\"list-group-item list-group-item-action list-group-item-success\">Web Developer - Role ID #201 ( Filled ) - 28 Applications Submitted</button>\n    <button class=\"list-group-item list-group-item-action list-group-item-success\">Web Developer - Role ID #202 ( Filled ) - 18 Applications Submitted</button>\n    <button class=\"list-group-item list-group-item-action list-group-item-danger\">Web Developer - Role ID #203 ( Canceled ) - 0 Applications Submitted</button>\n    <button class=\"list-group-item list-group-item-action list-group-item-success\">Web Developer - Role ID #204 ( Filled ) - 213 Applications Submitted</button>\n    <button class=\"list-group-item list-group-item-action list-group-item-success\">Web Developer - Role ID #205 ( Filled ) - 42 Applications Submitted</button>\n    <button class=\"list-group-item list-group-item-action list-group-item-success\">Web Developer - Role ID #201 ( Filled ) - 14 Applications Submitted</button>\n  </div>\n</div>\n\n<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -953,21 +979,21 @@ module.exports = "<div class=\"no-page-found\"> \n  <p>Darn, we couldnt find tha
 /***/ 832:
 /***/ (function(module, exports) {
 
-module.exports = "<app-user-bar></app-user-bar>\n\n<div class=\"role-description\">\n  <h4>Role - Web Developer</h4>\n</div>\n\n<div class=\"application-filter\">\n  <h5>Application Filter</h5>\n  \n  <label for=\"\">Occupation</label>\n  <select (change)=\"changeFilter()\" [(ngModel)]=\"occupation\" >\n    <option>Web Developer</option>\n    <option>Doctor</option>\n    <option>Nurse</option>\n    <option>Construction</option>\n    <option>Biologist</option>\n    <option>Gym Instructor</option>\n  </select>\n\n  <label for=\"\">Years Of Experience</label>\n  <select (change)=\"changeFilter()\" [(ngModel)]=\"experience\">\n    <option>0</option>\n    <option>1</option>\n    <option>2</option>\n    <option>3</option>\n    <option value=4 >4+</option>\n  </select>\n\n  <label for=\"\">Convictions</label>\n  <select (change)=\"changeFilter()\" [(ngModel)]=\"convictions\">\n    <option>None</option>\n    <option>Felony</option>\n    <option>Misdemeanor</option>\n  </select>\n</div>\n\n<div class=\"considerable-applications\">\n  <h5>Considerable Applications</h5>\n  <div class=\"input-group\">\n      <input type=\"text\" class=\"form-control\" placeholder=\"Search for...\">\n      <span class=\"input-group-btn\">\n        <button class=\"btn btn-success\" type=\"button\">Go!</button>\n      </span>\n    </div>\n  <table class=\"table table-striped table-hover\">\n    <thead>\n      <tr>\n        <th></th>\n        <th>Name</th>\n        <th>Occupation</th>\n        <th>Years Of Experience</th>\n        <th>Convictions</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr *ngFor=\"let application of applications\">\n        <button class=\"btn btn-info btn-sm\" (click)=\"setActiveApplication()\" >Show Application</button>\n        <td>{{application.name}}</td>\n        <td *ngFor=\"let question of application.questions\">{{question.answer}}</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n\n<div class=\"applicant\">\n  Bob 20\n</div>\n\n<button class=\"btn btn-primary\" routerLink=\"/manager\">Back to All Roles</button>\n"
+module.exports = "<app-user-bar></app-user-bar>\n\n<div class=\"role-description\">\n  <h4>Role: Web Developer, Opened 12/2/10</h4>\n</div>\n\n<div class=\"application-filter\">\n  <h5>Application Filter</h5>\n  <button class=\"btn btn-success add-filter\">Add Filter +</button>\n  <label for=\"\">Occupation</label>\n  <select (change)=\"changeFilter()\" [(ngModel)]=\"occupation\" >\n    <option>Web Developer</option>\n    <option>Doctor</option>\n    <option>Construction</option>\n    <option>Biologist</option>\n    <option>Gym Instructor</option>\n  </select>\n\n  <label for=\"\">Years Of Experience</label>\n  <select (change)=\"changeFilter()\" [(ngModel)]=\"experience\">\n    <option>0</option>\n    <option>1</option>\n    <option>2</option>\n    <option>3</option>\n    <option value=4 >4+</option>\n  </select>\n</div>\n\n<div class=\"considerable-applications\">\n  <h5>Best Applications</h5>\n  <div class=\"applications-table\">\n    <div class=\"input-group\">\n        <input type=\"text\" class=\"form-control\" placeholder=\"Search for...\">\n        <span class=\"input-group-btn\">\n          <button class=\"btn btn-success\" type=\"button\">Go!</button>\n        </span>\n      </div>\n    <table class=\"table table-striped table-hover\">\n      <thead>\n        <tr>\n          <th></th>\n          <th>Name</th>\n          <th>Current Occupation</th>\n          <th>Years Of Experience</th>\n          <th>Top Skill</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor=\"let application of applications\">\n          <button class=\"btn btn-primary btn-sm\" (click)=\"setActiveApplication(application)\" >Show Application</button>\n          <td>{{application.name}}</td>\n          <td *ngFor=\"let question of application.questions\">{{question.answer}}</td>\n        </tr>\n      </tbody>\n    </table>\n    <nav aria-label=\"...\">\n      <ul class=\"pagination\">\n        <li class=\"page-item disabled\">\n          <span class=\"page-link\">Previous</span>\n        </li>\n        <li class=\"page-item active\">\n          <span class=\"page-link\">\n            1\n            <span class=\"sr-only\">(current)</span>\n          </span>\n        </li>\n        <li class=\"page-item\"><span class=\"page-link\">2</span></li>\n        <li class=\"page-item\"><span class=\"page-link\">3</span></li>\n        <li class=\"page-item\">\n          <span class=\"page-link\" href=\"#\">Next</span>\n        </li>\n      </ul>\n    </nav>\n  </div>\n</div>\n\n<div class=\"applicant\" [hidden]=\"!showApplication\" [ngClass]=\"{'open': showApplication}\">\n  <h5>{{activeApplication.name}}'s Application</h5>\n  <div class=\"applicant-form\">\n    <form>\n      <div class=\"form-group\" *ngFor=\"let question of activeApplication.questions\">\n        <label>{{question.question}}</label>\n        <input type=\"text\" class=\"form-control\" [disabled]=\"true\" value=\"{{question.answer}}\">\n      </div>\n    </form>\n    <button class=\"btn btn-success hire\">Set Up Interview</button>\n  </div>\n</div>\n\n<button class=\"btn btn-primary back-to-roles\" routerLink=\"/manager\">Back to All Roles</button>\n"
 
 /***/ }),
 
 /***/ 833:
 /***/ (function(module, exports) {
 
-module.exports = "<img class=\"emblem\" routerLink=\"/login\" src='assets/jolter-emblem.svg'/>\n<h1 class=\"emblem-text\" routerLink=\"/login\" >Jolter</h1>"
+module.exports = "<div class=\"emblem\">\n    <img class=\"emblem-img\" routerLink=\"/login\" src='assets/jolter-emblem.svg'/>\n    <h1 class=\"emblem-text\" routerLink=\"/login\" >Jolter</h1>\n    <img class=\"emblem-img\" routerLink=\"/login\" src='assets/jolter-emblem.svg'/>\n</div>\n"
 
 /***/ }),
 
 /***/ 834:
 /***/ (function(module, exports) {
 
-module.exports = "<app-emblem></app-emblem>\n\n<div class=\"user-info\">\n  <p class=\"user-name\">Welcome Back - {{userName}}</p>\n  <img class=\"user-image\" src=\"assets/user.png\" />\n  <button class=\"btn btn-outline-warning btn-sm\" routerLink=\"/login\">Log Out</button>\n</div>"
+module.exports = "<app-emblem></app-emblem>\n\n<div class=\"user-info\">\n  <p class=\"user-name\">Welcome Back - {{userName}}</p>\n  <img class=\"user-image\" src=\"assets/user.png\" />\n</div>\n\n<button class=\"btn btn-outline-warning btn-sm log-out\" routerLink=\"/login\">Log Out</button>\n"
 
 /***/ })
 
