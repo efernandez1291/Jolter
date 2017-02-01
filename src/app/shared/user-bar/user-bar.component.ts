@@ -21,10 +21,10 @@ export class UserBarComponent implements OnInit {
   // TODO get this from a service that stores a user model
   private getUserName () {
     if (this.location.path() === '/manager' || this.location.path() === '/manager/role/200') {
-      this.userName = 'Manager001';
+      this.userName = 'Big Boss';
     }
     else {
-      this.userName = 'User001'
+      this.userName = 'Eduardo Fernandez'
     }
   }
 

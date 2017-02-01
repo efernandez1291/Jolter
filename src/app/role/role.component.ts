@@ -11,17 +11,18 @@ export class RoleComponent implements OnInit {
 
   public occupation: string;
   public experience: number;
-  public convictions: string;
   // TODO Create Applications Model and pass in that as the type instead of any.
   public applications: any[];
-  public removedApplications: any = [];
+  // Used to save applications for filtering later.
+  public removedApplications: Array<Object> = [];
+  public activeApplication: Object = {};
+  public showApplication: boolean = false;
+  public roleRequirements: Array<String>;
 
   constructor(
     private applicationsService: ApplicationsService,
     private activatedRoute: ActivatedRoute
-  ) { 
-
-  }
+  ) {}
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(
@@ -41,11 +42,11 @@ export class RoleComponent implements OnInit {
   }
 
   // TODO call a service that returns manager set requirements for the given role ID
-  private getMinimumRoleRequirements( roleID: number ) {
+  private getMinimumRoleRequirements( roleID: number ): void {
     // Sets default application filters
     this.occupation = 'Web Developer';
     this.experience = 3;
-    this.convictions = "None";
+    this.roleRequirements = [ 'id1', 'id2' ];
   }
 
   // TODO this should be a pipe, but i'm running out of time.
@@ -58,14 +59,15 @@ export class RoleComponent implements OnInit {
           let answer = this.applications[application].questions[question].answer;
           let questionId = this.applications[application].questions[question].id;
           // Ternary that determines if an Application needs to be removed from the array
-          let removeApp = (
-            answer === this.occupation ||
-            answer >= Number(this.experience) || 
-            answer === this.convictions) ? 
-            false : true
-          if (removeApp) {
-            // Used the removed application's index to save the one you need.
+          let removeApp = ( 
+            answer === this.occupation || 
+            answer >= Number(this.experience)
+          ) ?  false : true;
+          // If removeApp return true and the questionId is needed, remove the application from our array
+          if (removeApp && this.roleRequirements.indexOf(questionId) > -1 ) {
+            // Cache the to-be removed applications for use when filtering
             this.removedApplications.push(this.applications[Number(application)]);
+            // Remove application that didn't meet the filter standards
             this.removeApplication( Number(application) );
             return; 
           }
@@ -74,13 +76,9 @@ export class RoleComponent implements OnInit {
     };
   }
 
-  private removeApplication( applicationIndex: number ) {
+  private removeApplication( applicationIndex: number ): void {
     this.applications.splice( applicationIndex, 1 );
     this.filterApplications();
-  }
-
-  private saveRemovedApps( applicationToBeSavedIndex: number ): void {
-    this.removedApplications.push(this.applications[applicationToBeSavedIndex]);
   }
 
   public changeFilter(): void {
@@ -89,6 +87,11 @@ export class RoleComponent implements OnInit {
     }
     this.removedApplications = [];
     this.filterApplications();
+  }
+
+  public setActiveApplication( application: Object ): void {
+    this.activeApplication = application;
+    this.showApplication = true;
   }
 
 }

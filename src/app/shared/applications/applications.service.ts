@@ -23,8 +23,8 @@ export class ApplicationsService {
         },
         {
           id: 'id3',
-          question: 'Convictions',
-          answer: 'None'
+          question: 'Top Skill',
+          answer: 'Angular'
         }
       ]
     },
@@ -45,8 +45,8 @@ export class ApplicationsService {
         },
         {
           id: 'id3',
-          question: 'Convictions',
-          answer: 'None'
+          question: 'Top Skill',
+          answer: 'C++'
         }
       ]
     },
@@ -67,8 +67,30 @@ export class ApplicationsService {
         },
         {
           id: 'id3',
-          question: 'Convictions',
-          answer: 'None'
+          question: 'Top Skill',
+          answer: 'Java'
+        }
+      ]
+    },
+    {
+      name: 'Ken Block',
+      applicationId: 200,
+      manager: 'Manager001',
+      questions: [
+        {
+          id: 'id1',
+          question: 'Current Occupation',
+          answer: 'Web Developer'
+        },
+        {
+          id: 'id2',
+          question: 'Years of Experience',
+          answer: 3
+        },
+        {
+          id: 'id3',
+          question: 'Top Skill',
+          answer: 'Drifting'
         }
       ]
     },
@@ -89,8 +111,8 @@ export class ApplicationsService {
         },
         {
           id: 'id3',
-          question: 'Convictions',
-          answer: 'None'
+          question: 'Top Skill',
+          answer: 'Rollerblading'
         }
       ]
     },
@@ -111,8 +133,8 @@ export class ApplicationsService {
         },
         {
           id: 'id3',
-          question: 'Convictions',
-          answer: 'None'
+          question: 'Tope Skill',
+          answer: 'Im a brain Surgoen'
         }
       ]
     },
@@ -133,8 +155,8 @@ export class ApplicationsService {
         },
         {
           id: 'id3',
-          question: 'Convictions',
-          answer: 'Felony'
+          question: 'Top Skill',
+          answer: 'Definitely Pushups'
         }
       ]
     },
@@ -146,7 +168,7 @@ export class ApplicationsService {
         {
           id: 'id1',
           question: 'Current Occupation',
-          answer: 'Doctor'
+          answer: 'Biologist'
         },
         {
           id: 'id2',
@@ -155,8 +177,8 @@ export class ApplicationsService {
         },
         {
           id: 'id3',
-          question: 'Convictions',
-          answer: 'Misdemeanor'
+          question: 'Top Skill',
+          answer: 'Pokemon Go'
         }
       ]
     }

@@ -7,12 +7,22 @@
     margin-top: 40px;
 
     select {
+        margin: 0 10px 0 5px;
+    }
+
+    .add-filter {
+        display: inline-block;
         margin-right: 10px;
     }
 }
 
 .considerable-applications {
     margin-top: 40px;
+
+    .applications-table{
+        background-color:rgba(0, 0, 0, 0.2);
+        padding: 20px;
+    }
 
     tr button {
         margin-top: 10px;
@@ -25,4 +35,37 @@
     td {
         cursor: pointer;
     }
+
+    nav {
+        margin: 0 auto;
+        display: table;
+        cursor: pointer;
+    }
+}
+
+.applicant {
+    margin-top: 20px;
+    overflow-y: hidden;
+	max-height: 0; /* approximate max height */
+	transition-property: all;
+	transition-duration: 2s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+    &.open {
+        max-height: 500px;;
+    }
+
+    .applicant-form {
+        background-color:rgba(0, 0, 0, 0.2);
+        padding: 20px;
+
+        .hire {
+            margin: 30px auto 0; 
+            display: block;
+        }
+    }
+}
+
+.back-to-roles {
+    margin-top: 40px;
 }

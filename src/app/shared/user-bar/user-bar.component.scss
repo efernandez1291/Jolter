@@ -1,5 +1,6 @@
 .user-info {
-    float: right;
+    position: absolute;
+    top: 5px;
 
     .user-name {
         text-align: right;
@@ -9,14 +10,17 @@
     }
 
     .user-image {
-        width: 44px;
+        width: 40px;
+        height: 40px;
         vertical-align: bottom;
         background-color: white;
-        border-radius: 44px;
+        border-radius: 40px;
         vertical-align: middle;
     }
+}
 
-    button {
-        margin-left: 20px;
-    }
+.log-out {
+    position: absolute;
+    top: 12px;
+    right: 15px;
 }
